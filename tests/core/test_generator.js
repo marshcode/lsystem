@@ -1,8 +1,13 @@
 QUnit.module("generator")
 
-QUnit.test('Test Algae level 3', assert => {
+QUnit.test.each('Test Algae', [
+    [0, 'A'],
+    [1, 'AB'],
+    [2, "ABA"],
+    [3, "ABAAB"]
+], (assert, [target_level, expected]) => {
 
-    var gen = new Generator({"A":"AB", "B":"A"}, 'A', 3);
+    var gen = new Generator({"A":"AB", "B":"A"}, 'A', target_level);
     var output = run_generator(gen)
-    assert.equal(output, "ABAAB");
+    assert.equal(output, expected);
 });
