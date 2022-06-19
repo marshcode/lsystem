@@ -4,8 +4,45 @@
     <meta charset="UTF-8">
     <title>LSystems</title>
     <script src="core/generator.js"></script>
+    <script src="display/three_js.js"></script>
+
+    <style>
+        #container{
+            width: 500px;
+            height: 500px;
+        }
+
+    </style>
 </head>
 <body>
 
+    <div id="container">
+
+    </div>
+
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "/bin/threejs/three.module.js"
+				}
+			}
+    </script>
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from '/bin/threejs/controls/OrbitControls.js';
+
+        const container = document.getElementById("container")
+        const display = new ThreeJsDisplay(THREE, OrbitControls, container)
+
+
+        function animate() {
+            requestAnimationFrame( animate );
+            display.update()
+        }
+        animate()
+
+    </script>
 </body>
 </html>
