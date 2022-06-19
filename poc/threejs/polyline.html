@@ -40,25 +40,30 @@
                                                           linewidth: 4,
                                                         } );
             const points = [];
-            points.push( new THREE.Vector3( - 10, 0, 0 ) );
-            points.push( new THREE.Vector3( 0, 10, 0 ) );
+            points.push(  );
+            points.push(  );
             points.push( new THREE.Vector3( 10, 0, 0 ) );
 
-            var geometry = new THREE.BufferGeometry().setFromPoints( points );
-            const line = new THREE.Line( geometry, material );
+            var curve_path = new THREE.CurvePath();
+            curve_path.add(new THREE.LineCurve3(
+                new THREE.Vector3( - 10, 0, 0 ),
+                new THREE.Vector3( 0, 10, 0 )
+            ));
+            curve_path.add(new THREE.LineCurve3(
+                new THREE.Vector3( 0, 10, 0 ),
+                new THREE.Vector3( 10, 0, 0 )
+            ));
 
-            scene.add( line );
 
+            var control_polygon_material =  new THREE.MeshLambertMaterial({color: 0x00ff00, emissive: 0x000000, ambient: 0x000000, shading: THREE.SmoothShading});
+            var control_polygon = new THREE.Mesh(new THREE.TubeGeometry(curve_path, 64, 0.5, 8, false),
+                control_polygon_material);
 
-            geometry = new THREE.CylinderGeometry( 1, 1, 15, 32 );
-            //Yellow
-            var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
-            var cylinder = new THREE.Mesh( geometry, material );
-            cylinder.position.x = 5
-            scene.add( cylinder );
+            scene.add(control_polygon)
 
 
             var light = new THREE.HemisphereLight(0x404040, 0xFFFFFF, 1);
+            light.position.y =  -10
             scene.add(light);
 
             function animate() {
