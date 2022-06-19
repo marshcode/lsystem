@@ -59,9 +59,22 @@
             points.push( new THREE.Vector3( 0, -10, 0 ) );
             points.push( new THREE.Vector3( 10, 0, 0 ) );
 
-            const material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+            const material = new THREE.LineBasicMaterial({color: 0xffffff});
             const geometry = new THREE.BufferGeometry().setFromPoints( points );
             const line = new THREE.Line( geometry, material );
+            line.geometry.setDrawRange(0, 3)
+
+            setInterval(function(){
+                var count = line.geometry.drawRange.count;
+                var newCount = (count + 1) % 4
+                if(newCount < 1){
+                    newCount = 1
+                }
+
+                console.log(count + " "  + newCount)
+                line.geometry.setDrawRange(0, newCount)
+            }, 500)
+
 
             scene.add( line );
 
