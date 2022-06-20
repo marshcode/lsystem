@@ -147,8 +147,11 @@
 
         const clear = document.getElementById("clear")
         document.getElementById("render").onclick = function(){
+
+            if(clear.checked){
+                display.clear();
+            }
             const curve_info = curve_interface.getInfo();
-            console.log(clear.checked);
             render_curve(curve_info);
         };
 

@@ -15,6 +15,17 @@ class ThreeJsDisplay{
         return this.turtles[this.turtles.length-1]
     }
 
+    clear(){
+        this.lines = [];
+        this.line_vtx_idx = 0;
+        this.turtles = [new Turtle()]
+
+        this.scene.clear();
+        this.createLine();
+        this.renderTurtle(this.getTurtle())
+
+    }
+
     createLine(){
         const material = new this.THREE.LineBasicMaterial({color: 0xffffff});
         const geometry = new this.THREE.BufferGeometry();
