@@ -9,18 +9,58 @@
 
     <style>
         #container{
-            width: 500px;
+            width: 1000px;
             height: 500px;
+        }
+
+        #wrap{
+            display: flex;
+            padding-right: 15px;
+        }
+
+        #controls{
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        #controls label{
+            display: block;
+            padding-bottom: 15px;
+        }
+
+        #controls #angle {
+            width:3em;
+            display: block;
+        }
+
+        #container {
+            flex: 10;
         }
 
     </style>
 </head>
 <body>
 
-    <div id="container">
+    <div id="wrap">
+        <div id="controls">
+            <label>
+                Axiom: <input id="axiom" type="text">
+            </label>
+            <label>
+                Angle: <input id="angle" type="number">
+            </label>
+            <label>
+                Rules: <textarea></textarea>
+            </label>
+            <label>
+                <input type="button" value="Render">
+            </label>
+        </div>
 
+        <div id="container">
+
+        </div>
     </div>
-
     <script type="importmap">
 			{
 				"imports": {
