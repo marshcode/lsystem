@@ -35,11 +35,21 @@ class CurveInterface{
 
 
     getInfo(){
+
+        const rules = {}
+        const ruleText = this.domRules.value;
+        const ruleLines = ruleText.split('\n');
+        ruleLines.forEach(line=>{
+            const keyRule = line.split(":")
+            rules[keyRule[0]] = keyRule[1]
+        })
+
         return {
+            rules: rules,
             axiom: this.domAxiom.value,
-            angle: this.domAngle.value,
-            depth: this.domDepth.value,
-            step: this.domStep.value,
+            angle: Number(this.domAngle.value),
+            depth: Number(this.domDepth.value),
+            step: Number(this.domStep.value),
             forwardXY: this.domForwardXY.value,
             turnXYcw: this.domTurnXYcw.value,
             turnXYccw: this.domTurnXYccw.value

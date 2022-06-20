@@ -105,7 +105,7 @@
         //////////////////////////////
         const curve_interface = new CurveInterface(
             document.getElementById("axiom"), document.getElementById('rules'),
-            document.getElementById('angle'), document.getElementById('step'), document.getElementById('depth'),
+            document.getElementById('angle'), document.getElementById('depth'), document.getElementById('step'),
             document.getElementById("forwardXY"), document.getElementById("turnXYcw"), document.getElementById('turnXYccw')
         )
 
@@ -147,9 +147,9 @@
 
         const clear = document.getElementById("clear")
         document.getElementById("render").onclick = function(){
-            const curve_info = curve_storage.getCurve(chooser_select.value)
+            const curve_info = curve_interface.getInfo();
             console.log(clear.checked);
-            render_curve(curve_info)
+            render_curve(curve_info);
         };
 
 
