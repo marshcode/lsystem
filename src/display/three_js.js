@@ -62,7 +62,6 @@ class ThreeJsDisplay{
     initialize(domElement, THREE, OrbitControls){
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize( domElement.offsetWidth, domElement.offsetHeight );
-        domElement.appendChild(renderer.domElement);
 
         const camera = new THREE.PerspectiveCamera( 45, domElement.offsetWidth / domElement.offsetHeight, 1, 500 );
         camera.position.set( 0, 0, 100 );

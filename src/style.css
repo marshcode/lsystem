@@ -44,3 +44,7 @@
 #container {
     flex: 10;
 }
+
+#container #log{
+    overflow-wrap: break-word;
+}
