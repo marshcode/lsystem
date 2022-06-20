@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>LSystems</title>
     <script src="core/generator.js"></script>
+    <script src="core/curve_storage.js"></script>
     <script src="display/turtle.js"></script>
     <script src="display/three_js.js"></script>
+    <script src="widgets/curve_chooser.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -52,11 +54,12 @@
                 <input type="button" value="Render">
             </label>
 
-            <div>
-                Samples:
-                <ul id="samples">
-                </ul>
-
+            <div id="chooser">
+                <label>
+                    Load Curve: </br>
+                    <select id="chooser_select"></select>
+                    <input id="chooser_button" type="button" value="Load">
+                </label>
             </div>
         </div>
 
@@ -121,30 +124,21 @@
         create_curve()
 
         ///////////////////////////
-        //Samples
+        //Curve Storage and Choice
         ///////////////////////////
-        const sample_data = {
-            'snowflake':{
-                "display" :"Snowflake"
-            },
-            'dragon':{
-                "display" :"Dragon"
-            }
-        }
-        const samples = document.getElementById("samples")
-        for(var key in sample_data){
-            var data = sample_data[key];
-            var li = document.createElement('li');
-            li.setAttribute('data-type', key);
-            li.textContent = data.display;
-            samples.appendChild(li);
-        }
+        var curve_storage = new CurveStorage()
+        curve_storage.addCurve('snowflake', "Snowflake")
+        curve_storage.addCurve('dragon', "Dragon")
 
 
-        samples.onclick = function (e){
-            const sample = e.target.getAttribute('data-type')
-            console.log(sample);
-        }
+        var chooser_select = document.getElementById("chooser_select")
+        var chooser_button = document.getElementById("chooser_button")
+        curve_chooser(curve_storage, chooser_select)
+        chooser_button.onclick = (function(e){
+            console.log(chooser_select.value)
+        })
+
+;
 
     </script>
 </body>
