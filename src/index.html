@@ -33,6 +33,24 @@
             display: block;
         }
 
+        #controls textarea{
+            height: 4em;
+        }
+
+        #controls ul{
+            list-style-type: none;
+            color:blue;
+        }
+
+        #controls li {
+            padding-bottom: 5px;
+        }
+
+        #controls li:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         #container {
             flex: 10;
         }
@@ -55,6 +73,13 @@
             <label>
                 <input type="button" value="Render">
             </label>
+
+            <div>
+                Samples:
+                <ul id="samples">
+                </ul>
+
+            </div>
         </div>
 
         <div id="container">
@@ -77,12 +102,35 @@
         const container = document.getElementById("container")
         const display = new ThreeJsDisplay(THREE, OrbitControls, container)
 
-
         function animate() {
             requestAnimationFrame( animate );
             display.update()
         }
         animate()
+
+
+        const sample_data = {
+            'snowflake':{
+                "display" :"Snowflake"
+            },
+            'dragon':{
+                "display" :"Dragon"
+            }
+        }
+        const samples = document.getElementById("samples")
+        for(var key in sample_data){
+            var data = sample_data[key];
+            var li = document.createElement('li');
+            li.setAttribute('data-type', key);
+            li.textContent = data.display;
+            samples.appendChild(li);
+        }
+
+
+        samples.onclick = function (e){
+            const sample = e.target.getAttribute('data-type')
+            console.log(sample);
+        }
 
     </script>
 </body>
