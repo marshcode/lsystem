@@ -18,7 +18,7 @@ class ThreeJsDisplay{
     createLine(){
         const material = new this.THREE.LineBasicMaterial({color: 0xffffff});
         const geometry = new this.THREE.BufferGeometry();
-        const positions = new Float32Array( 25 * 3 ); // 3 vertices per point
+        const positions = new Float32Array( 200 * 3 ); // 3 vertices per point
         geometry.setAttribute( 'position', new this.THREE.BufferAttribute( positions, 3 ) );
 
         const line = new this.THREE.Line( geometry, material );
