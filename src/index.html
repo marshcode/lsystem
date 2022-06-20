@@ -16,9 +16,16 @@
             <label>
                 Axiom: <input id="axiom" type="text">
             </label>
-            <label>
-                Angle: <input id="angle" type="number">
-            </label>
+
+            <div class="inline">
+                <label>
+                    Angle: <input id="angle" type="number">
+                </label>
+                <label>
+                    Depth: <input id="depth" type="number">
+                </label>
+            </div>
+
             <label>
                 Rules: <textarea></textarea>
             </label>
@@ -70,7 +77,7 @@
         ///////////////////////////
         const log = document.getElementById('log')
         var create_curve = function(){
-            const gen = new Generator({"F":"F+F−F−F+F"}, "F", 3)
+            const gen = new Generator({"F":"F+F−F−F+F"}, "F", 2)
             log.textContent = '';
             while(gen.hasNext()){
                 let symbol = gen.step()

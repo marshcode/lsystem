@@ -18,7 +18,15 @@
     padding-bottom: 15px;
 }
 
-#controls #angle {
+#controls .inline{
+    display: flex;
+}
+
+#controls .inline label{
+    flex: 1;
+}
+
+#controls #angle, #controls #depth {
     width:3em;
     display: block;
 }
