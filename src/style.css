@@ -1,0 +1,46 @@
+#container{
+    width: 1000px;
+    height: 500px;
+}
+
+#wrap{
+    display: flex;
+    padding-right: 15px;
+}
+
+#controls{
+    flex: 1;
+    padding-right: 15px;
+}
+
+#controls label{
+    display: block;
+    padding-bottom: 15px;
+}
+
+#controls #angle {
+    width:3em;
+    display: block;
+}
+
+#controls textarea{
+    height: 4em;
+}
+
+#controls ul{
+    list-style-type: none;
+    color:blue;
+}
+
+#controls li {
+    padding-bottom: 5px;
+}
+
+#controls li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#container {
+    flex: 10;
+}
