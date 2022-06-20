@@ -8,6 +8,7 @@
     <script src="display/turtle.js"></script>
     <script src="display/three_js.js"></script>
     <script src="widgets/curve_chooser.js"></script>
+    <script src="widgets/curve_interface.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -42,26 +43,26 @@
                 </div>
 
                 <label>
-                    Rules: <textarea></textarea>
+                    Rules: <textarea id="rules"></textarea>
                 </label>
             </fieldset>
             <fieldset>
                 <legend>Operations</legend>
                 <label>
-                    Forward: <input id="forward" type="text">
+                    ForwardXY: <input id="forwardXY" type="text">
                 </label>
                 <div class="inline">
                     <label>
-                        XY+: <input class="small" id="XY+" type="text">
+                        XY+: <input class="small" id="turnXYcw" type="text">
                     </label>
                     <label>
-                        XY-: <input class="small" id="XY-" type="text">
+                        XY-: <input class="small" id="turnXYccw" type="text">
                     </label>
                 </div>
             </fieldset>
 
             <label>
-                <input type="button" value="Render">
+                <input id="render" type="button" value="Render">
             </label>
         </div>
 
@@ -96,12 +97,21 @@
         }
         animate()
 
+        //////////////////////////////
+        //Curve Interface
+        //////////////////////////////
+        const curve_interface = new CurveInterface(
+            document.getElementById("axiom"), document.getElementById('rules'),
+            document.getElementById('angle'), document.getElementById('step'), document.getElementById('depth'),
+            document.getElementById("forwardXY"), document.getElementById("turnXYcw"), document.getElementById('turnXYccw')
+        )
+
         ///////////////////////////
         //Core / UI interface
         ///////////////////////////
         const log = document.getElementById('log')
-        var create_curve = function(){
-            const gen = new Generator({"F":"F+F−F−F+F"}, "F", 2)
+        var render_curve = function(curve_info){
+            const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
             log.textContent = '';
             while(gen.hasNext()){
                 let symbol = gen.step()
@@ -109,38 +119,39 @@
                     log.textContent = log.textContent + symbol;
                 }
 
-                switch (symbol){
-                    case 'F':
-                        display.forwardXY(5);
-                        break;
-                    case '−':
-                        display.turnXY(-90);
-                        break;
-                    case '+':
-                        display.turnXY(90);
-                        break;
+                if(curve_info.forwardXY.includes(symbol)){
+                    display.forwardXY(curve_info.step);
+                } else if(curve_info.turnXYcw.includes(symbol)){
+                    display.turnXY(-curve_info.angle);
+                } else if(curve_info.turnXYccw.includes(symbol)){
+                    display.turnXY(curve_info.angle);
                 }
             }
         }
-
-        create_curve()
 
         ///////////////////////////
         //Curve Storage and Choice
         ///////////////////////////
         var curve_storage = new CurveStorage()
-        curve_storage.addCurve('snowflake', "Snowflake")
-        curve_storage.addCurve('dragon', "Dragon")
+        curve_storage.addCurve('koch', "Koch", {"F":"F+F-F-F+F"}, "F", 2, 90, 5, "F","-","+")
 
 
         var chooser_select = document.getElementById("chooser_select")
         var chooser_button = document.getElementById("chooser_button")
         curve_chooser(curve_storage, chooser_select)
-        chooser_button.onclick = (function(e){
-            console.log(chooser_select.value)
+        chooser_button.onclick = (function(){
+
+            const curve_info = curve_storage.getCurve(chooser_select.value)
+            if(curve_info){
+                curve_interface.populate(curve_info)
+            }
         })
 
-;
+        document.getElementById("render").onclick = function(){
+            const curve_info = curve_storage.getCurve(chooser_select.value)
+            render_curve(curve_info)
+        };
+
 
     </script>
 </body>
