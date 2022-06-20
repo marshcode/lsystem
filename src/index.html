@@ -61,9 +61,12 @@
                 </div>
             </fieldset>
 
-            <label>
-                <input id="render" type="button" value="Render">
+            <input id="render" type="button" value="Render">
+            <label class="display_inline">
+                <input id="clear" type="checkbox" checked="checked" /> Clear
             </label>
+
+
         </div>
 
         <div id="container">
@@ -109,15 +112,10 @@
         ///////////////////////////
         //Core / UI interface
         ///////////////////////////
-        const log = document.getElementById('log')
         var render_curve = function(curve_info){
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
-            log.textContent = '';
             while(gen.hasNext()){
                 let symbol = gen.step()
-                if(symbol){
-                    log.textContent = log.textContent + symbol;
-                }
 
                 if(curve_info.forwardXY.includes(symbol)){
                     display.forwardXY(curve_info.step);
@@ -147,8 +145,10 @@
             }
         })
 
+        const clear = document.getElementById("clear")
         document.getElementById("render").onclick = function(){
             const curve_info = curve_storage.getCurve(chooser_select.value)
+            console.log(clear.checked);
             render_curve(curve_info)
         };
 

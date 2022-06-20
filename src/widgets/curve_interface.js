@@ -33,4 +33,16 @@ class CurveInterface{
         this.domTurnXYccw.value = curve_info.turnXYccw;
     }
 
+
+    getInfo(){
+        return {
+            axiom: this.domAxiom.value,
+            angle: this.domAngle.value,
+            depth: this.domDepth.value,
+            step: this.domStep.value,
+            forwardXY: this.domForwardXY.value,
+            turnXYcw: this.domTurnXYcw.value,
+            turnXYccw: this.domTurnXYccw.value
+        }
+    }
 }

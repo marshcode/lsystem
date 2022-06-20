@@ -22,6 +22,10 @@
     display: flex;
 }
 
+#controls label.display_inline{
+    display: inline;
+}
+
 #controls .inline label{
     flex: 1;
 }
