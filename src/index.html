@@ -48,6 +48,9 @@
 
     <script type="module">
 
+        ///////////////////////////
+        //Core Setup
+        ///////////////////////////
         import * as THREE from 'three';
         import { OrbitControls } from '/bin/threejs/controls/OrbitControls.js';
 
@@ -60,7 +63,32 @@
         }
         animate()
 
+        ///////////////////////////
+        //Core / UI interface
+        ///////////////////////////
+        var create_curve = function(){
+            const gen = new Generator({"F":"F+F−F−F+F"}, "F", 2)
+            while(gen.hasNext()){
+                let symbol = gen.step()
+                switch (symbol){
+                    case 'F':
+                        display.forwardXY(5);
+                        break;
+                    case '−':
+                        display.turnXY(90);
+                        break;
+                    case '+':
+                        display.turnXY(-90);
+                        break;
+                }
+            }
+        }
 
+        create_curve()
+
+        ///////////////////////////
+        //Samples
+        ///////////////////////////
         const sample_data = {
             'snowflake':{
                 "display" :"Snowflake"
