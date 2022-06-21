@@ -68,16 +68,21 @@
                     </label>
                 </div>
             </fieldset>
-
-            <input id="render" type="button" value="Render">
-            <label class="display_inline">
-                <input id="clear" type="checkbox" checked="checked" /> Clear
-            </label>
-
-
         </div>
 
         <div id="container">
+            <fieldset>
+                <legend>Render Options</legend>
+                <input id="render" type="button" value="Render">
+                <span class="divide"></span>
+                <label id="clear_label">
+                    <input id="clear" type="checkbox" checked="checked" /> Clear
+                </label>
+                <span class="divide"></span>
+                Slow
+                <input type="range" min="0" max="100" value="100" id="renderSpeed">
+                Fast
+            </fieldset>
             <div id="log"></div>
         </div>
     </div>
@@ -125,24 +130,33 @@
         var render_curve = function(curve_info){
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
             log.textContent="";
-            while(gen.hasNext()){
-                let symbol = gen.step()
-                if(symbol){
-                    log.textContent = log.textContent + symbol;
-                }
+            var inner = function(){
+                var i = 0;
+                while(gen.hasNext() && i < 100){
+                    i+=1;
+                    let symbol = gen.step()
+                    if(symbol){
+                        log.textContent = log.textContent + symbol;
+                    }
 
-                if(curve_info.forwardXY.includes(symbol)){
-                    display.forwardXY(curve_info.step);
-                } else if(curve_info.turnXYcw.includes(symbol)){
-                    display.turnXY(-curve_info.angle);
-                } else if(curve_info.turnXYccw.includes(symbol)){
-                    display.turnXY(curve_info.angle);
-                } else if(curve_info.push.includes(symbol)){
-                    display.pushTurtle();
-                } else if(curve_info.pop.includes(symbol)){
-                    display.popTurtle();
+                    if(curve_info.forwardXY.includes(symbol)){
+                        display.forwardXY(curve_info.step);
+                    } else if(curve_info.turnXYcw.includes(symbol)){
+                        display.turnXY(-curve_info.angle);
+                    } else if(curve_info.turnXYccw.includes(symbol)){
+                        display.turnXY(curve_info.angle);
+                    } else if(curve_info.push.includes(symbol)){
+                        display.pushTurtle();
+                    } else if(curve_info.pop.includes(symbol)){
+                        display.popTurtle();
+                    }
+                }
+                if(gen.hasNext()){
+                    setTimeout(inner, 500)
                 }
             }
+
+            inner();
         }
 
         ///////////////////////////

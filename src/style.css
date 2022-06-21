@@ -22,8 +22,10 @@
     display: flex;
 }
 
-#controls label.display_inline{
-    display: inline;
+.divide {
+    border-left: solid 1px black;
+    height: 100%;
+    margin: 0 15px;
 }
 
 #controls .inline label{
