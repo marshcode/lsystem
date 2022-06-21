@@ -24,7 +24,7 @@ class CurveInterface{
         this.domAxiom.value = curve_info.axiom;
         this.domRules.value = Object.keys(curve_info.rules).map(key=>
             key+":"+curve_info.rules[key]
-        )
+        ).join('\n')
         this.domAngle.value = curve_info.angle;
         this.domDepth.value = curve_info.depth;
         this.domStep.value = curve_info.step;
