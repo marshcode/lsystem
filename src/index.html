@@ -94,6 +94,7 @@
         </div>
 
         <div id="container">
+            <div id="log"></div>
             <fieldset>
                 <legend>Render Options</legend>
                 <input id="render" type="button" value="Render">
@@ -107,8 +108,11 @@
                 Fast
                 <span class="divide"></span>
                 Steps / Interval: <input class="small" type="number" value="100" id="stepsPerInterval">
+                <span class="divide"></span>
+                <label>
+                    <input id="show_symbols" type="checkbox" checked="checked" /> Show Symbols
+                </label>
             </fieldset>
-            <div id="log"></div>
         </div>
     </div>
     <script type="importmap">
@@ -216,6 +220,10 @@
             render_curve(curve_info, intervalMS, stepsPerInterval.value);
         };
 
+        const show_symbols = document.getElementById("show_symbols");
+        show_symbols.onchange = function (){
+            log.style.visibility = show_symbols.checked ? 'visible' : 'hidden';
+        }
 
     </script>
 </body>

@@ -57,10 +57,14 @@
 
 #container {
     flex: 10;
+    position: relative;
 }
 
 #container #log{
     overflow-wrap: break-word;
+    position: absolute;
+    top:0;
+    color:white;
 }
 
 #container .small{
