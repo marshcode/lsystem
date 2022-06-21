@@ -62,3 +62,7 @@
 #container #log{
     overflow-wrap: break-word;
 }
+
+#container .small{
+    width: 3em
+}

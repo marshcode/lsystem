@@ -48,15 +48,38 @@
             </fieldset>
             <fieldset>
                 <legend>Operations</legend>
-                <label>
-                    ForwardXY: <input id="forwardXY" type="text">
-                </label>
                 <div class="inline">
+                    <label>
+                        FXY: <input class="small" id="forwardXY" type="text">
+                    </label>
                     <label>
                         XY+: <input class="small" id="turnXYcw" type="text">
                     </label>
                     <label>
                         XY-: <input class="small" id="turnXYccw" type="text">
+                    </label>
+                </div>
+                <div class="inline">
+                    <label>
+                        FXZ: <input class="small" id="forwardXZ" type="text">
+                    </label>
+                    <label>
+                        XZ+: <input class="small" id="turnXZcw" type="text">
+                    </label>
+                    <label>
+                        XZ-: <input class="small" id="turnXZccw" type="text">
+                    </label>
+                </div>
+
+                <div class="inline">
+                    <label>
+                        FYZ: <input class="small" id="forwardYZ" type="text">
+                    </label>
+                    <label>
+                        YZ+: <input class="small" id="turnYZcw" type="text">
+                    </label>
+                    <label>
+                        YZ-: <input class="small" id="turnYZccw" type="text">
                     </label>
                 </div>
                 <div class="inline">
@@ -79,9 +102,11 @@
                     <input id="clear" type="checkbox" checked="checked" /> Clear
                 </label>
                 <span class="divide"></span>
-                Slow
-                <input type="range" min="0" max="100" value="100" id="renderSpeed">
+                Interval: Slow
+                <input type="range" min="1" max="100" value="1000" id="intervalPct">
                 Fast
+                <span class="divide"></span>
+                Steps / Interval: <input class="small" type="number" value="100" id="stepsPerInterval">
             </fieldset>
             <div id="log"></div>
         </div>
@@ -127,12 +152,12 @@
         //Core / UI interface
         ///////////////////////////
         const log = document.getElementById('log')
-        var render_curve = function(curve_info){
+        var render_curve = function(curve_info, intervalMS, stepsPerInterval){
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
             log.textContent="";
             var inner = function(){
                 var i = 0;
-                while(gen.hasNext() && i < 100){
+                while(gen.hasNext() && i < stepsPerInterval){
                     i+=1;
                     let symbol = gen.step()
                     if(symbol){
@@ -152,7 +177,7 @@
                     }
                 }
                 if(gen.hasNext()){
-                    setTimeout(inner, 500)
+                    setTimeout(inner, intervalMS)
                 }
             }
 
@@ -179,13 +204,16 @@
         })
 
         const clear = document.getElementById("clear")
+        const intervalPct = document.getElementById("intervalPct")
+        const stepsPerInterval = document.getElementById("stepsPerInterval")
         document.getElementById("render").onclick = function(){
 
             if(clear.checked){
                 display.clear();
             }
             const curve_info = curve_interface.getInfo();
-            render_curve(curve_info);
+            const intervalMS = ((100 - intervalPct.value) / 100.0) * 500
+            render_curve(curve_info, intervalMS, stepsPerInterval.value);
         };
 
 
