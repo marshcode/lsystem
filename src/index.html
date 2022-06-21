@@ -121,10 +121,16 @@
         ///////////////////////////
         //Core / UI interface
         ///////////////////////////
+        const log = document.getElementById('log')
         var render_curve = function(curve_info){
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
+            log.textContent="";
             while(gen.hasNext()){
                 let symbol = gen.step()
+                if(symbol){
+                    log.textContent = log.textContent + symbol;
+                }
+
                 if(curve_info.forwardXY.includes(symbol)){
                     display.forwardXY(curve_info.step);
                 } else if(curve_info.turnXYcw.includes(symbol)){
