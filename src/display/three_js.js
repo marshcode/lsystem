@@ -89,6 +89,11 @@ class ThreeJsDisplay{
         turtle.turnZ(angle)
     }
 
+    turnXZ(angle){
+        const turtle = this.getTurtle();
+        turtle.turnY(angle)
+    }
+
     initialize(domElement, THREE, OrbitControls){
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize( domElement.offsetWidth, domElement.offsetHeight );

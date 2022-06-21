@@ -34,6 +34,7 @@ class Turtle {
         const turtle =  new Turtle();
         turtle.point = this.point;
         turtle.axes = this.axes;
+        return turtle;
     }
 
     moveX(by){
