@@ -1,32 +1,78 @@
+// shamelessly stolen from https://openhome.cc/eGossip/OpenSCAD/3DTurtleGraphics.html
+
 function toRadians (angle) {
     return angle * (Math.PI / 180);
 }
 
-class Turtle{
+X = 0
+Y = 1
+Z = 2
 
-    constructor(x=0, y=0, z=0, angleXY=0) {
-        this.x=x;
-        this.y=y;
-        this.z=z;
-        this.angleXY = angleXY;
+var ptPlus = function (p1, p2){
+    return [p1[X] + p2[X], p1[Y] + p2[Y], p1[Z] + p2[Z] ]
+}
+
+var mult = function (p1, n){
+    return [p1[X] * n, p1[Y]*n, p1[Z] *n]
+}
+
+var neg = function(pt){
+    return mult(pt, -1)
+}
+
+class Turtle {
+    constructor() {
+        this.point = [0,0,0]
+        this.axes = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1] 
+        ]
     }
 
     clone(){
-        return new Turtle(this.x, this.y, this.z, this.angleXY)
+        const turtle =  new Turtle();
+        turtle.point = this.point;
+        turtle.axes = this.axes;
     }
 
-    turnAngleXY(angle){
-        this.angleXY = (this.angleXY + angle) % 360;
+    moveX(by){
+        const vec = this.axes[X];
+        this.point = ptPlus(this.point, mult(vec, by))
+    }
+    
+    turnX(angleDeg){
+        const angleRad = toRadians(angleDeg);
+        this.axes = [
+            this.axes[X],
+            ptPlus(mult(this.axes[Y], Math.cos(angleRad)), mult(this.axes[Z], Math.sin(angleRad))),
+            ptPlus(mult(neg(this.axes[Y]), Math.sin(angleRad)), mult(this.axes[Z], Math.cos(angleRad)))
+        ]
     }
 
-    forwardXY(by){
-        // effectively translate the coordinate system origin to the reference point by only using
-        // the 'by' as the polar radius.  This creates offsets that we apply to the original points.
-        // otherwise, changes in orientation swing us wildly from quadrant to quadrant
-
-        const c_angle = toRadians(this.angleXY)
-        this.x += by * Math.cos(c_angle)
-        this.y += by * Math.sin(c_angle)
+    turnY(angleDeg) {
+        const angleRad = toRadians(angleDeg);
+        this.axes = [
+            ptPlus(mult(this.axes[X], Math.cos(angleRad)), mult(neg(this.axes[Z]), Math.sin(angleRad))),
+            this.axes[Y],
+            ptPlus(mult(this.axes[X], Math.sin(angleRad)), mult(this.axes[Z], Math.cos(angleRad)))
+        ]
     }
 
+    turnZ(angleDeg){
+        const angleRad = toRadians(angleDeg);
+        this.axes = [
+            ptPlus(mult(this.axes[X], Math.cos(angleRad)), mult(this.axes[Y], Math.sin(angleRad))),
+            ptPlus(mult(neg(this.axes[X]), Math.sin(angleRad)), mult(this.axes[Y], Math.cos(angleRad))),
+            this.axes[Z]
+        ]
+    }
 }
+
+
+
+
+
+
+
+

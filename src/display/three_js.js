@@ -65,9 +65,9 @@ class ThreeJsDisplay{
 
         //TODO - check index and see if we need to create a new line
         const positions = line.geometry.attributes.position.array;
-        positions[this.line_vtx_idx++] = turtle.x;
-        positions[this.line_vtx_idx++] = turtle.y;
-        positions[this.line_vtx_idx++] = turtle.z;
+        positions[this.line_vtx_idx++] = turtle.point[0];
+        positions[this.line_vtx_idx++] = turtle.point[1];
+        positions[this.line_vtx_idx++] = turtle.point[2];
 
         var count = line.geometry.drawRange.count
 
@@ -80,14 +80,13 @@ class ThreeJsDisplay{
 
     forwardXY(by){
         const turtle = this.getTurtle();
-        turtle.forwardXY(by);
+        turtle.moveX(by);
         this.renderTurtle(turtle)
-
     }
 
     turnXY(angle){
         const turtle = this.getTurtle();
-        turtle.turnAngleXY(angle)
+        turtle.turnZ(angle)
     }
 
     initialize(domElement, THREE, OrbitControls){
