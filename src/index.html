@@ -59,6 +59,14 @@
                         XY-: <input class="small" id="turnXYccw" type="text">
                     </label>
                 </div>
+                <div class="inline">
+                    <label>
+                        Push: <input class="small" id="push" type="text">
+                    </label>
+                    <label>
+                        Pop: <input class="small" id="pop" type="text">
+                    </label>
+                </div>
             </fieldset>
 
             <input id="render" type="button" value="Render">
@@ -106,7 +114,8 @@
         const curve_interface = new CurveInterface(
             document.getElementById("axiom"), document.getElementById('rules'),
             document.getElementById('angle'), document.getElementById('depth'), document.getElementById('step'),
-            document.getElementById("forwardXY"), document.getElementById("turnXYcw"), document.getElementById('turnXYccw')
+            document.getElementById("forwardXY"), document.getElementById("turnXYcw"), document.getElementById('turnXYccw'),
+            document.getElementById("push"), document.getElementById("pop")
         )
 
         ///////////////////////////
@@ -116,13 +125,16 @@
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
             while(gen.hasNext()){
                 let symbol = gen.step()
-
                 if(curve_info.forwardXY.includes(symbol)){
                     display.forwardXY(curve_info.step);
                 } else if(curve_info.turnXYcw.includes(symbol)){
                     display.turnXY(-curve_info.angle);
                 } else if(curve_info.turnXYccw.includes(symbol)){
                     display.turnXY(curve_info.angle);
+                } else if(curve_info.push.includes(symbol)){
+                    display.pushTurtle();
+                } else if(curve_info.pop.includes(symbol)){
+                    display.popTurtle();
                 }
             }
         }
@@ -131,8 +143,9 @@
         //Curve Storage and Choice
         ///////////////////////////
         var curve_storage = new CurveStorage()
-        curve_storage.addCurve('koch', "Koch", {"F":"F+F-F-F+F"}, "F", 2, 90, 5, "F","-","+")
-        curve_storage.addCurve('dragon', "Dragon", {"F":"F+G",  "G":"F-G"}, "F", 2, 90, 5, "FG","-","+")
+        curve_storage.addCurve('koch', "Koch", {"F":"F+F-F-F+F"}, "F", 2, 90, 5, "F","-","+", '[', ']')
+        curve_storage.addCurve('dragon', "Dragon", {"F":"F+G",  "G":"F-G"}, "F", 2, 90, 5, "FG","-","+", '[', ']')
+        curve_storage.addCurve('plant', "Plant", {"F":"FF",  "X":"F+[[X]-X]-F[-FX]+X"}, "X", 2, 25, 5, "F","-","+", '[', ']')
 
         var chooser_select = document.getElementById("chooser_select")
         var chooser_button = document.getElementById("chooser_button")

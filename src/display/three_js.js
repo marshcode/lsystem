@@ -1,6 +1,7 @@
 class ThreeJsDisplay{
     constructor(THREE, OrbitControls, domElement) {
-        this.turtles = [new Turtle()]
+        this.turtles = []
+        this.turtle = new Turtle();
         this.lines = []
         this.line_vtx_idx = 0;
 
@@ -11,14 +12,25 @@ class ThreeJsDisplay{
         this.renderTurtle(this.getTurtle())
     }
 
+    pushTurtle(){
+        this.turtles.push(this.getTurtle().clone());
+    }
+
+    popTurtle(){
+        this.turtle = this.turtles.pop();
+        this.createLine();
+        this.renderTurtle(this.getTurtle())
+    }
+
     getTurtle(){
-        return this.turtles[this.turtles.length-1]
+        return this.turtle
     }
 
     clear(){
         this.lines = [];
         this.line_vtx_idx = 0;
-        this.turtles = [new Turtle()]
+        this.turtles = []
+        this.turtle = new Turtle();
 
         this.scene.clear();
         this.createLine();

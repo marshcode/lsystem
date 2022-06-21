@@ -9,6 +9,8 @@ class CurveInterface{
         domForwardXY,
         domTurnXYcw,
         domTurnXYccw,
+        domPush,
+        domPop
     ) {
         this.domAxiom = domAxiom;
         this.domRules = domRules;
@@ -18,6 +20,8 @@ class CurveInterface{
         this.domForwardXY = domForwardXY
         this.domTurnXYcw = domTurnXYcw
         this.domTurnXYccw = domTurnXYccw
+        this.domPush = domPush;
+        this.domPop = domPop;
     }
 
     populate(curve_info){
@@ -31,6 +35,9 @@ class CurveInterface{
         this.domForwardXY.value = curve_info.forwardXY;
         this.domTurnXYcw.value = curve_info.turnXYcw;
         this.domTurnXYccw.value = curve_info.turnXYccw;
+
+        this.domPush.value = curve_info.push;
+        this.domPop.value = curve_info.pop;
     }
 
 
@@ -52,7 +59,9 @@ class CurveInterface{
             step: Number(this.domStep.value),
             forwardXY: this.domForwardXY.value,
             turnXYcw: this.domTurnXYcw.value,
-            turnXYccw: this.domTurnXYccw.value
+            turnXYccw: this.domTurnXYccw.value,
+            push: this.domPush.value,
+            pop: this.domPop.value
         }
     }
 }

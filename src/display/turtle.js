@@ -11,6 +11,10 @@ class Turtle{
         this.angleXY = angleXY;
     }
 
+    clone(){
+        return new Turtle(this.x, this.y, this.z, this.angleXY)
+    }
+
     turnAngleXY(angle){
         this.angleXY = (this.angleXY + angle) % 360;
     }
