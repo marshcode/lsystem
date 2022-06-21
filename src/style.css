@@ -1,6 +1,11 @@
 #container{
     width: 1000px;
     height: 500px;
+    display: flex;
+    flex-direction: column;
+    flex: 10;
+    position: relative;
+    justify-content: space-evenly;
 }
 
 #wrap{
@@ -53,11 +58,6 @@
 #controls li:hover {
     text-decoration: underline;
     cursor: pointer;
-}
-
-#container {
-    flex: 10;
-    position: relative;
 }
 
 #container #log{

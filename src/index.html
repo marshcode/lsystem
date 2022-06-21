@@ -96,6 +96,39 @@
         <div id="container">
             <div id="log"></div>
             <fieldset>
+                <legend>Colors</legend>
+                <label>
+                    1 <input type="color" id="color1" value="#ff0000">
+                </label>
+                <label>
+                    2 <input type="color" id="color2" value="#ff7f00">
+                </label>
+                <label>
+                    3 <input type="color" id="color3" value="#ffff00">
+                </label>
+                <label>
+                    4 <input type="color" id="color4" value="#00ff00">
+                </label>
+                <label>
+                    5 <input type="color" id="color5" value="#0000ff">
+                </label>
+                <label>
+                    6 <input type="color" id="color6" value="#4b0082">
+                </label>
+                <label>
+                    7 <input type="color" id="color7" value="#9400D3">
+                </label>
+                <label>
+                    8 <input type="color" id="color8" value="#ffffff">
+                </label>
+                <label>
+                    9 <input type="color" id="color9" value="#ff1694">
+                </label>
+                <label>
+                    0 <input type="color" id="color10" value="#9a7b4f">
+                </label>
+            </fieldset>
+            <fieldset>
                 <legend>Render Options</legend>
                 <input id="render" type="button" value="Render">
                 <span class="divide"></span>
@@ -156,6 +189,7 @@
         //Core / UI interface
         ///////////////////////////
         const log = document.getElementById('log')
+        const color1 = document.getElementById('color1')
         var render_curve = function(curve_info, intervalMS, stepsPerInterval){
             const gen = new Generator(curve_info.rules, curve_info.axiom, curve_info.depth)
             log.textContent="";
@@ -178,6 +212,9 @@
                         display.pushTurtle();
                     } else if(curve_info.pop.includes(symbol)){
                         display.popTurtle();
+                    } else if("0123456789".includes(symbol)){
+                        const color = document.getElementById("color"+symbol).value;
+                        display.setColor(color)
                     }
                 }
                 if(gen.hasNext()){

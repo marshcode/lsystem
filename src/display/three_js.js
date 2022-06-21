@@ -4,12 +4,19 @@ class ThreeJsDisplay{
         this.turtle = new Turtle();
         this.lines = []
         this.line_vtx_idx = 0;
+        this.color = 0xffffff;
 
         this.THREE = THREE
         this.initialize(domElement, THREE, OrbitControls)
 
         this.createLine();
         this.renderTurtle(this.getTurtle())
+    }
+
+    setColor(color){
+        this.color = color;
+        this.createLine(color);
+        this.renderTurtle(this.getTurtle());
     }
 
     pushTurtle(){
@@ -40,7 +47,7 @@ class ThreeJsDisplay{
     }
 
     createLine(){
-        const material = new this.THREE.LineBasicMaterial({color: 0xffffff});
+        const material = new this.THREE.LineBasicMaterial({color: this.color});
         const geometry = new this.THREE.BufferGeometry();
         const positions = new Float32Array( 200 * 3 ); // 3 vertices per point
         geometry.setAttribute( 'position', new this.THREE.BufferAttribute( positions, 3 ) );
