@@ -23,6 +23,7 @@ class ThreeJsDisplay{
         this.scene.clear();
         this.createLine();
         this.renderTurtle(this.getTurtle())
+        this.draw_helpers()
 
     }
 
@@ -90,9 +91,26 @@ class ThreeJsDisplay{
         this.scene = scene;
         this.controls = controls;
         this.camera = camera
+
+        this.draw_helpers()
+    }
+
+    draw_helpers(){
+        const geometry = new this.THREE.SphereGeometry( 1, 32, 16 );
+        const material = new this.THREE.MeshBasicMaterial( { color: 0x00ffff } );
+        const sphere = new this.THREE.Mesh( geometry, material );
+        this.rotation_point = sphere;
+        this.scene.add( sphere );
+
+        const axesHelper = new this.THREE.AxesHelper( 5 );
+        this.scene.add( axesHelper );
     }
 
     update(){
+        this.rotation_point.position.x = this.controls.target.x
+        this.rotation_point.position.y = this.controls.target.y
+        this.rotation_point.position.z = this.controls.target.z
+
         this.controls.update();
         this.renderer.render( this.scene, this.camera );
     }
