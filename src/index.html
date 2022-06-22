@@ -156,7 +156,6 @@
         //Core Setup
         ///////////////////////////
         import * as THREE from 'three';
-        import { OrbitControls } from '/bin/threejs/controls/OrbitControls.js';
         import { TrackballControls } from '/bin/threejs/controls/TrackballControls.js'
 
         const container = document.getElementById("container")
@@ -198,7 +197,10 @@
                     i+=1;
                     let symbol = gen.step()
                     if(symbol){
-                        log.textContent = log.textContent + symbol;
+                        const size = log.textContent.length
+                        const start = Math.max(size - 100, 0)
+                        console.log(start, size)
+                        log.textContent = log.textContent.slice(start, size) + symbol;
                     }
 
                     if(curve_info.forwardXY.includes(symbol)){
