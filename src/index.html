@@ -157,14 +157,17 @@
         ///////////////////////////
         import * as THREE from 'three';
         import { OrbitControls } from '/bin/threejs/controls/OrbitControls.js';
+        import { TrackballControls } from '/bin/threejs/controls/TrackballControls.js'
 
         const container = document.getElementById("container")
-        const display = new ThreeJsDisplay(THREE, OrbitControls, container)
+        const display = new ThreeJsDisplay(THREE, container)
         container.prepend(display.renderer.domElement);
-
+        const controls = new TrackballControls( display.camera, display.renderer.domElement );
 
         function animate() {
             requestAnimationFrame( animate );
+            controls.update()
+            display.setRotationCenter(controls.target.x, controls.target.y, controls.target.z)
             display.update()
         }
         animate()

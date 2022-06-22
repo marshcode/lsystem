@@ -1,5 +1,5 @@
 class ThreeJsDisplay{
-    constructor(THREE, OrbitControls, domElement) {
+    constructor(THREE, domElement) {
         this.turtles = []
         this.turtle = new Turtle();
         this.lines = []
@@ -7,7 +7,7 @@ class ThreeJsDisplay{
         this.color = 0xffffff;
 
         this.THREE = THREE
-        this.initialize(domElement, THREE, OrbitControls)
+        this.initialize(domElement, THREE)
 
         this.createLine();
         this.renderTurtle(this.getTurtle())
@@ -94,7 +94,7 @@ class ThreeJsDisplay{
         turtle.turnY(angle)
     }
 
-    initialize(domElement, THREE, OrbitControls){
+    initialize(domElement, THREE){
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize( domElement.offsetWidth, domElement.offsetHeight );
 
@@ -104,15 +104,8 @@ class ThreeJsDisplay{
 
         const scene = new THREE.Scene();
 
-        const controls = new OrbitControls( camera, renderer.domElement );
-        controls.target.set( 0, 0.5, 0 );
-        controls.update();
-        controls.enablePan = true;
-        controls.enableDamping = true;
-
         this.renderer = renderer;
         this.scene = scene;
-        this.controls = controls;
         this.camera = camera
 
         this.draw_helpers()
@@ -129,12 +122,15 @@ class ThreeJsDisplay{
         this.scene.add( axesHelper );
     }
 
-    update(){
-        this.rotation_point.position.x = this.controls.target.x
-        this.rotation_point.position.y = this.controls.target.y
-        this.rotation_point.position.z = this.controls.target.z
+    setRotationCenter(x,y,z){
+        this.rotation_point.position.x = x
+        this.rotation_point.position.y = y
+        this.rotation_point.position.z = z
+    }
 
-        this.controls.update();
+    update(){
+
+
         this.renderer.render( this.scene, this.camera );
     }
 
