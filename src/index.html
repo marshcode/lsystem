@@ -162,6 +162,7 @@
         const display = new ThreeJsDisplay(THREE, container)
         container.prepend(display.renderer.domElement);
         const controls = new TrackballControls( display.camera, display.renderer.domElement );
+        controls.rotateSpeed = 2;
 
         function animate() {
             requestAnimationFrame( animate );
@@ -199,7 +200,6 @@
                     if(symbol){
                         const size = log.textContent.length
                         const start = Math.max(size - 100, 0)
-                        console.log(start, size)
                         log.textContent = log.textContent.slice(start, size) + symbol;
                     }
 
