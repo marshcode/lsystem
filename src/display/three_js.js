@@ -41,8 +41,10 @@ class ThreeJsDisplay{
 
         this.scene.clear();
         this.createLine();
+        this.draw_turtle()
         this.renderTurtle(this.getTurtle())
         this.draw_helpers()
+
 
     }
 
@@ -75,6 +77,11 @@ class ThreeJsDisplay{
         line.geometry.attributes.position.needsUpdate = true;
         line.geometry.computeBoundingBox();
         line.geometry.computeBoundingSphere();
+
+        this.turtle_mesh.position.x = this.turtle.point[0]
+        this.turtle_mesh.position.y = this.turtle.point[1]
+        this.turtle_mesh.position.z = this.turtle.point[2]
+
         this.update();
     }
 
@@ -87,11 +94,13 @@ class ThreeJsDisplay{
     turnXY(angle){
         const turtle = this.getTurtle();
         turtle.turnZ(angle)
+        this.rotate_turtle();
     }
 
     turnXZ(angle){
         const turtle = this.getTurtle();
         turtle.turnY(angle)
+        this.rotate_turtle()
     }
 
     initialize(domElement, THREE){
@@ -109,6 +118,7 @@ class ThreeJsDisplay{
         this.camera = camera
 
         this.draw_helpers()
+        this.draw_turtle()
     }
 
     draw_helpers(){
@@ -120,6 +130,22 @@ class ThreeJsDisplay{
 
         const axesHelper = new this.THREE.AxesHelper( 5 );
         this.scene.add( axesHelper );
+    }
+
+    rotate_turtle(){
+        const point = this.turtle.peekX(1)
+        this.turtle_mesh.lookAt(point[0], point[1], point[2])
+    }
+
+    draw_turtle(){
+        const geometry = new this.THREE.ConeGeometry( 1, 3, 32  );
+        const material = new this.THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        const turtle_mesh = new this.THREE.Mesh( geometry, material );
+        this.turtle_mesh = turtle_mesh;
+        this.turtle_mesh.geometry.rotateX(Math.PI * 0.5);
+        this.rotate_turtle()
+
+        this.scene.add( turtle_mesh );
     }
 
     setRotationCenter(x,y,z){

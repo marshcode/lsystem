@@ -37,9 +37,13 @@ class Turtle {
         return turtle;
     }
 
-    moveX(by){
+    peekX(by){
         const vec = this.axes[X];
-        this.point = ptPlus(this.point, mult(vec, by))
+        return ptPlus(this.point, mult(vec, by))
+    }
+
+    moveX(by){
+        this.point = this.peekX(by)
     }
     
     turnX(angleDeg){
