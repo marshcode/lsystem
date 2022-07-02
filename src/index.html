@@ -259,16 +259,15 @@
             curve_info.display = "Share"
             const share_blob = get_share_blob(curve_info)
 
-            const share_link = window.location.origin + window.location.pathname + "?share="+encodeURI(share_blob)
+            const share_link = window.location.origin + window.location.pathname + "#"+encodeURI(share_blob)
             share_text.textContent = share_link
             share_dialog.showModal();
         })
 
         // check share fragment
-        const url = new URL(window.location.href)
-        const share = url.searchParams.get('share')
+        const share = window.location.hash.replace('#', '')
         if (share){
-            const curve =  parse_share_blob(decodeURI(share.replace(/_/g, '/').replace(/ /g, '+')))
+            const curve =  parse_share_blob(share)
             curve_interface.populate(curve)
             curve_storage.addCurve("share", curve)
         }
