@@ -4,8 +4,12 @@ class CurveStorage{
         this.curves = {}
     }
 
+    addCurveObject(name, curve){
+        this.curves[name] = curve;
+    }
+
     addCurve(name, display, rules, axiom, depth, angle, step, forwardXY){
-        this.curves[name] = {
+        this.addCurveObject(name, {
             display:display,
             rules:rules,
             axiom:axiom,
@@ -19,7 +23,7 @@ class CurveStorage{
             turnXZccw:">",
             push: '[',
             pop: ']'
-        }
+        });
     }
 
     getCurve(name){

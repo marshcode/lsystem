@@ -9,6 +9,7 @@
     <script src="display/three_js.js"></script>
     <script src="widgets/curve_chooser.js"></script>
     <script src="widgets/curve_interface.js"></script>
+    <script src="widgets/share.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -20,6 +21,7 @@
                 <label>
                     <select id="chooser_select"></select>
                     <input id="chooser_button" type="button" value="Load">
+                    <input id="share_button" type="button" value="Share">
                 </label>
             </div>
 
@@ -249,6 +251,28 @@
             }
         })
 
+        var share_button = document.getElementById("share_button")
+        var share_dialog = document.getElementById("share_dialog")
+        var share_text = document.getElementById("share_dialog_pre")
+        share_button.onclick = (function(){
+            const curve_info = curve_interface.getInfo()
+            curve_info.display = "Share"
+            const share_blob = get_share_blob(curve_info)
+
+            const share_link = window.location.origin + window.location.pathname + "?share="+share_blob
+            share_text.textContent = share_link
+            share_dialog.showModal();
+        })
+
+        // check share fragment
+        const url = new URL(window.location.href)
+        const share = url.searchParams.get('share')
+        if (share){
+            const curve = parse_share_blob(share)
+            curve_interface.populate(curve)
+            curve_storage.addCurve("share", curve)
+        }
+
         const clear = document.getElementById("clear")
         const intervalPct = document.getElementById("intervalPct")
         const stepsPerInterval = document.getElementById("stepsPerInterval")
@@ -268,5 +292,16 @@
         }
 
     </script>
+
+    <dialog id="share_dialog">
+        <form method="dialog">
+            <div id="share_dialog_pre">
+
+            </div>
+            <div>
+                <button value="cancel">Close</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>

@@ -72,3 +72,9 @@
 #container .small{
     width: 3em
 }
+
+#share_dialog_pre {
+    width: 500px;
+    overflow-wrap: break-word;
+    background: #999;
+}
